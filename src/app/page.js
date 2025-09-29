@@ -1,12 +1,12 @@
 'use client';
+
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  Github,
-  Linkedin,
-  Mail,
-  ExternalLink,
-  MapPin,
+import { 
+  Github, 
+  Linkedin, 
+  Mail, 
+  MapPin, 
   Calendar,
   Code,
   Briefcase,
@@ -14,24 +14,40 @@ import {
   FileText,
   Menu,
   X,
-  ChevronDown,
   Monitor,
-  Smartphone,
-  Database,
   Globe,
+  Send,
+  Download,
+  ExternalLink,
+  CheckCircle2,
+  Sparkles
 } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Separator } from '@/components/ui/separator';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { 
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuList,
+} from '@/components/ui/navigation-menu';
+import { ModeToggle } from '@/components/mode-toggle';
 
-const Portfolio = () => {
+export default function Portfolio() {
   const [activeSection, setActiveSection] = useState('home');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [theme, setTheme] = useState('dark');
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const navItems = [
-    { id: 'home', label: 'Home', icon: User },
-    { id: 'about', label: 'About', icon: User },
-    { id: 'experience', label: 'Experience', icon: Briefcase },
-    { id: 'skills', label: 'Skills', icon: Code },
-    { id: 'contact', label: 'Contact', icon: Mail },
+    { id: 'home', label: 'Home' },
+    { id: 'about', label: 'About' },
+    { id: 'experience', label: 'Experience' },
+    { id: 'skills', label: 'Skills' },
+    { id: 'contact', label: 'Contact' }
   ];
 
   const experiences = [
@@ -40,100 +56,129 @@ const Portfolio = () => {
       role: 'Frontend Developer (Nuxt)',
       period: 'Nov 2023 - Present',
       location: 'Remote',
-      description:
-        'Building client-facing web applications with Nuxt.js and TypeScript',
+      current: true,
+      description: 'Building client-facing web applications with Nuxt.js and TypeScript for professional services firms.',
       achievements: [
-        'Built client onboarding platform using Nuxt TypeScript and Pinia',
-        'Developed automated multi-step onboarding workflows with form validation',
-        'Created dynamic KYC and Risk assessment forms',
-        'Implemented dynamic theme system for customizable branding',
+        'Built client onboarding platform using Nuxt TypeScript and Pinia for state management',
+        'Developed automated multi-step onboarding workflows with comprehensive form validation',
+        'Created dynamic KYC and Risk assessment forms for individual and business clients',
+        'Implemented dynamic theme system enabling custom branding per organization',
+        'Collaborated with clients on UI/UX improvements and backend teams on API integration'
       ],
-      tech: ['Nuxt 3', 'TypeScript', 'Pinia', 'Vue.js'],
+      tech: ['Nuxt 3', 'TypeScript', 'Pinia', 'Vue.js', 'REST APIs']
     },
     {
       company: 'Azensys (NotaryPro)',
       role: 'Frontend Web Developer (React)',
       period: 'Nov 2023 - May 2024',
       location: 'Remote',
-      description:
-        'Developed legal appointment scheduling and document management systems',
+      current: false,
+      description: 'Developed legal appointment scheduling and document management systems for notary services.',
       achievements: [
-        'Built intake forms for scheduling appointments with lawyers',
-        'Created tenant site for appointment and document management',
-        'Maintained digital signing and scheduling features',
-        'Translated Figma designs to pixel-perfect components',
+        'Built comprehensive intake forms for scheduling appointments with lawyers',
+        'Developed and maintained tenant site for appointment and document management',
+        'Maintained critical features including digital signing and scheduling systems',
+        'Translated Figma designs to pixel-perfect, interactive components',
+        'Integrated RESTful APIs for document management and real-time appointment synchronization'
       ],
-      tech: ['React', 'REST APIs', 'Figma', 'JavaScript'],
+      tech: ['React', 'REST APIs', 'Figma', 'JavaScript', 'Real-time Systems']
     },
     {
       company: 'Brankas',
       role: 'Frontend Web Developer (Vue 3, React)',
       period: 'Nov 2021 - Apr 2023',
       location: 'Remote',
-      description: 'Worked on core banking solutions and fintech applications',
+      current: false,
+      description: 'Worked on core banking solutions and fintech applications for seamless financial integrations.',
       achievements: [
-        'Refactored Core Banking project from Vue 2 to Vue 3',
+        'Successfully refactored Core Banking project from Vue 2 to Vue 3',
         'Developed mobile-first responsive web application for bank account binding',
-        'Collaborated with UI/UX designers for optimal user experience',
+        'Enabled seamless integration with third-party financial services',
+        'Collaborated with UI/UX designers to optimize user experience for banking customers'
       ],
-      tech: ['Vue 3', 'React', 'Mobile-First Design', 'Banking APIs'],
+      tech: ['Vue 3', 'Vue 2', 'React', 'Mobile-First Design', 'Banking APIs', 'Fintech']
     },
     {
       company: 'Emlo Technologies',
       role: 'Web Developer (Angular, React & Flutter)',
       period: 'Oct 2020 - Nov 2021',
       location: 'Remote',
-      description:
-        'Developed various fintech applications and mentored junior developers',
+      current: false,
+      description: 'Developed various fintech applications and mentored junior developers in modern web technologies.',
       achievements: [
-        'Built Money Changer, Remittance, Accounting applications',
-        'Created marketing sites using React',
-        'Developed mobile app for live FX rates using Flutter',
-        'Mentored junior developers and conducted code reviews',
+        'Built Money Changer, Remittance, Accounting, and PoS Retail web applications',
+        'Created marketing sites using React for multiple company applications',
+        'Developed mobile application for live FX rates using Flutter',
+        'Mentored junior developers during OJT by reviewing pull requests',
+        'Contributed to frontend integration using Angular 8 TypeScript and backend C#'
       ],
-      tech: ['Angular 8', 'React', 'Flutter', 'C#', 'TypeScript'],
+      tech: ['Angular 8', 'React', 'Flutter', 'C#', 'TypeScript']
     },
     {
       company: 'DGV SmartStart',
       role: 'Software Developer (Angular & C#)',
       period: 'Oct 2017 - Oct 2020',
       location: 'Cebu City, Philippines',
-      description:
-        'Developed enterprise solutions for pharmacy and cannabis dispensary',
+      current: false,
+      description: 'Developed enterprise solutions including Point-of-sale and ERP systems for pharmacy and cannabis dispensary.',
       achievements: [
-        'Built Point-of-sale and inventory management system',
-        'Worked on ERP system from requirements to deployment',
-        'Developed telehealth web app with Socket.io messaging',
-        'Direct client interaction for requirements and bug fixes',
+        'Built enterprise Point-of-sale and real-time inventory management system',
+        'Worked on ERP system from requirements gathering to deployment and maintenance',
+        'Developed telehealth web app using Socket.io for messaging and conference calls',
+        'Helped develop Backend API using Node.js for cloud-based dental care software',
+        'Engaged directly with clients to clarify requirements and implement fixes'
       ],
-      tech: ['Angular 8', 'C#', 'Node.js', 'Socket.io', 'Ionic'],
-    },
+      tech: ['Angular 8', 'C#', 'Node.js', 'Socket.io', 'Ionic', 'TypeScript']
+    }
   ];
 
-  const skills = {
+  const skillCategories = {
     'Frontend Frameworks': [
       { name: 'Nuxt 3', level: 95, experience: '1+ years' },
       { name: 'Vue.js', level: 90, experience: '4+ years' },
       { name: 'React', level: 85, experience: '3+ years' },
-      { name: 'Angular', level: 80, experience: '3+ years' },
+      { name: 'Angular', level: 80, experience: '3+ years' }
     ],
     'Languages & Core': [
       { name: 'JavaScript/TypeScript', level: 95, experience: '6+ years' },
       { name: 'HTML5/CSS3', level: 90, experience: '6+ years' },
-      { name: 'Responsive Design', level: 90, experience: '6+ years' },
+      { name: 'Responsive Design', level: 90, experience: '6+ years' }
     ],
     'Backend & Database': [
       { name: 'C#', level: 75, experience: '3 years' },
       { name: 'PHP Laravel', level: 70, experience: '2 years' },
       { name: 'Node.js', level: 65, experience: '1 year' },
-      { name: 'MS SQL/MySQL', level: 70, experience: '3+ years' },
+      { name: 'MS SQL/MySQL', level: 70, experience: '3+ years' }
     ],
     'Mobile & Tools': [
       { name: 'Flutter', level: 60, experience: '1 year' },
       { name: 'Ionic', level: 70, experience: '2 years' },
-      { name: 'Git/CI/CD', level: 85, experience: '6+ years' },
-    ],
+      { name: 'Git/CI/CD', level: 85, experience: '6+ years' }
+    ]
   };
+
+  const strengths = [
+    {
+      icon: Code,
+      title: 'Technical Leadership',
+      description: 'Mentoring developers and conducting thorough code reviews'
+    },
+    {
+      icon: Monitor,
+      title: 'Full-Stack Understanding',
+      description: 'Backend knowledge enabling seamless integration'
+    },
+    {
+      icon: Globe,
+      title: 'Client Communication',
+      description: 'Direct client interaction ensuring alignment'
+    },
+    {
+      icon: Sparkles,
+      title: 'Continuous Learning',
+      description: 'Quick adaptation to new technologies'
+    }
+  ];
 
   const toggleTheme = () => {
     setTheme(theme === 'dark' ? 'light' : 'dark');
@@ -142,25 +187,34 @@ const Portfolio = () => {
   const scrollToSection = (sectionId) => {
     setActiveSection(sectionId);
     setIsMobileMenuOpen(false);
-
+    
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      const offset = 80;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
     }
   };
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = navItems.map((item) => item.id);
-      const current = sections.find((section) => {
+      setIsScrolled(window.scrollY > 20);
+      
+      const sections = navItems.map(item => item.id);
+      const current = sections.find(section => {
         const element = document.getElementById(section);
         if (element) {
           const rect = element.getBoundingClientRect();
-          return rect.top <= 100 && rect.bottom >= 100;
+          return rect.top <= 150 && rect.bottom >= 150;
         }
         return false;
       });
-
+      
       if (current) {
         setActiveSection(current);
       }
@@ -171,88 +225,80 @@ const Portfolio = () => {
   }, []);
 
   return (
-    <div
-      className={`min-h-screen transition-colors duration-300 ${
-        theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'
-      }`}
-    >
+    <div className={`min-h-screen transition-colors duration-300 ${
+      theme === 'dark' 
+        ? 'bg-background text-foreground' 
+        : 'bg-slate-50 text-slate-900'
+    }`}>
       {/* Navigation */}
-      <nav
+      <motion.nav 
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
         className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-          theme === 'dark'
-            ? 'bg-gray-900/95 border-gray-800'
-            : 'bg-white/95 border-gray-200'
-        } backdrop-blur-sm border-b`}
+          isScrolled
+            ? theme === 'dark'
+              ? 'bg-background/95 backdrop-blur-md border-b border-border shadow-lg'
+              : 'bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-lg'
+            : 'bg-transparent'
+        }`}
       >
-        <div className='max-w-6xl mx-auto px-4 sm:px-6'>
-          <div className='flex justify-between items-center h-16'>
-            <motion.div
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <motion.div 
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              className='font-bold text-xl'
+              className="font-bold text-xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
             >
               Arnold Agura
             </motion.div>
 
             {/* Desktop Navigation */}
-            <div className='hidden md:flex items-center space-x-8'>
-              {navItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => scrollToSection(item.id)}
-                  className={`relative px-3 py-2 text-sm font-medium transition-colors ${
-                    activeSection === item.id
-                      ? theme === 'dark'
-                        ? 'text-blue-400'
-                        : 'text-blue-600'
-                      : theme === 'dark'
-                      ? 'text-gray-300 hover:text-white'
-                      : 'text-gray-600 hover:text-gray-900'
-                  }`}
-                >
-                  {item.label}
-                  {activeSection === item.id && (
-                    <motion.div
-                      layoutId='activeSection'
-                      className={`absolute bottom-0 left-0 right-0 h-0.5 ${
-                        theme === 'dark' ? 'bg-blue-400' : 'bg-blue-600'
-                      }`}
-                    />
-                  )}
-                </button>
-              ))}
-
-              <button
-                onClick={toggleTheme}
-                className={`p-2 rounded-lg transition-colors ${
-                  theme === 'dark'
-                    ? 'bg-gray-800 hover:bg-gray-700'
-                    : 'bg-gray-100 hover:bg-gray-200'
-                }`}
-              >
-                {theme === 'dark' ? '🌞' : '🌙'}
-              </button>
-            </div>
+            <NavigationMenu className="hidden md:flex">
+              <NavigationMenuList className="flex items-center space-x-2">
+                {navItems.map((item) => (
+                  <NavigationMenuItem key={item.id}>
+                    <Button
+                      variant={activeSection === item.id ? "default" : "ghost"}
+                      size="sm"
+                      onClick={() => scrollToSection(item.id)}
+                      className={activeSection === item.id ? "bg-primary" : ""}
+                    >
+                      {item.label}
+                    </Button>
+                  </NavigationMenuItem>
+                ))}
+                
+                <NavigationMenuItem>
+                  {/* <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={toggleTheme}
+                    className="ml-2"
+                  >
+                    {theme === 'dark' ? '🌞' : '🌙'}
+                  </Button> */}
+                  <ModeToggle />
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
 
             {/* Mobile menu button */}
-            <div className='md:hidden flex items-center space-x-4'>
-              <button
+            <div className="md:hidden flex items-center space-x-2">
+              <Button
+                variant="outline"
+                size="icon"
                 onClick={toggleTheme}
-                className={`p-2 rounded-lg transition-colors ${
-                  theme === 'dark'
-                    ? 'bg-gray-800 hover:bg-gray-700'
-                    : 'bg-gray-100 hover:bg-gray-200'
-                }`}
               >
                 {theme === 'dark' ? '🌞' : '🌙'}
-              </button>
-
-              <button
+              </Button>
+              
+              <Button
+                variant="ghost"
+                size="icon"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className='p-2'
               >
-                {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-              </button>
+                {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+              </Button>
             </div>
           </div>
         </div>
@@ -265,245 +311,185 @@ const Portfolio = () => {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               className={`md:hidden border-t ${
-                theme === 'dark'
-                  ? 'border-gray-800 bg-gray-900'
-                  : 'border-gray-200 bg-white'
+                theme === 'dark' ? 'border-border bg-background' : 'border-slate-200 bg-white'
               }`}
             >
-              <div className='px-4 py-2 space-y-1'>
+              <div className="px-4 py-3 space-y-1">
                 {navItems.map((item) => (
-                  <button
+                  <Button
                     key={item.id}
+                    variant={activeSection === item.id ? "default" : "ghost"}
+                    className="w-full justify-start"
                     onClick={() => scrollToSection(item.id)}
-                    className={`w-full text-left px-3 py-2 text-sm font-medium transition-colors ${
-                      activeSection === item.id
-                        ? theme === 'dark'
-                          ? 'text-blue-400 bg-gray-800'
-                          : 'text-blue-600 bg-gray-100'
-                        : theme === 'dark'
-                        ? 'text-gray-300 hover:text-white hover:bg-gray-800'
-                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-                    } rounded-lg`}
                   >
-                    <item.icon className='inline-block w-4 h-4 mr-2' />
                     {item.label}
-                  </button>
+                  </Button>
                 ))}
               </div>
             </motion.div>
           )}
         </AnimatePresence>
-      </nav>
+      </motion.nav>
 
       {/* Hero Section */}
-      <section id='home' className='pt-16 min-h-screen flex items-center'>
-        <div className='max-w-6xl mx-auto px-4 sm:px-6'>
-          <div className='grid grid-cols-1 lg:grid-cols-2 gap-12 items-center'>
+      <section id="home" className="pt-24 pb-16 min-h-screen flex items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.7 }}
             >
-              <h1 className='text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6'>
+              <Badge variant="secondary" className="mb-4">
+                <Sparkles className="w-3 h-3 mr-1" />
+                Available for Remote Work
+              </Badge>
+              
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight mb-6">
                 Frontend Developer
-                <span
-                  className={`block ${
-                    theme === 'dark' ? 'text-blue-400' : 'text-blue-600'
-                  }`}
-                >
+                <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                   & UI Engineer
                 </span>
               </h1>
-
-              <p
-                className={`text-lg sm:text-xl mb-8 leading-relaxed ${
-                  theme === 'dark' ? 'text-gray-300' : 'text-gray-600'
-                }`}
-              >
-                6+ years crafting exceptional user experiences with modern
-                JavaScript frameworks. Specialized in Nuxt 3, Vue.js, and React
-                with a passion for creating seamless experiences for both users
-                and developers.
+              
+              <p className="text-lg sm:text-xl mb-8 leading-relaxed text-muted-foreground">
+                6+ years crafting exceptional user experiences with modern JavaScript frameworks. 
+                Specialized in Nuxt 3, Vue.js, and React with a passion for creating seamless 
+                digital experiences.
               </p>
 
-              <div className='flex flex-wrap gap-4 mb-8'>
-                <motion.a
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  href='#contact'
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection('contact');
-                  }}
-                  className={`inline-flex items-center px-6 py-3 rounded-lg font-medium transition-colors ${
-                    theme === 'dark'
-                      ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                      : 'bg-blue-600 hover:bg-blue-700 text-white'
-                  }`}
-                >
-                  <Mail className='w-4 h-4 mr-2' />
+              <div className="flex flex-wrap gap-4 mb-8">
+                <Button size="lg" onClick={() => scrollToSection('contact')}>
+                  <Mail className="w-4 h-4 mr-2" />
                   Get In Touch
-                </motion.a>
-
-                <motion.a
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  href='#experience'
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection('experience');
-                  }}
-                  className={`inline-flex items-center px-6 py-3 rounded-lg font-medium transition-colors border ${
-                    theme === 'dark'
-                      ? 'border-gray-700 hover:bg-gray-800 text-white'
-                      : 'border-gray-300 hover:bg-gray-100 text-gray-900'
-                  }`}
-                >
-                  <FileText className='w-4 h-4 mr-2' />
-                  View Experience
-                </motion.a>
+                </Button>
+                
+                <Button size="lg" variant="outline" onClick={() => scrollToSection('experience')}>
+                  <Briefcase className="w-4 h-4 mr-2" />
+                  View Work
+                </Button>
+                
+                <Button size="lg" variant="ghost">
+                  <Download className="w-4 h-4 mr-2" />
+                  Download CV
+                </Button>
               </div>
 
-              <div className='flex items-center space-x-6'>
-                <motion.a
-                  whileHover={{ scale: 1.1 }}
-                  href='https://github.com/arnoldagura'
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  className={`p-2 rounded-lg transition-colors ${
-                    theme === 'dark'
-                      ? 'hover:bg-gray-800 text-gray-400 hover:text-white'
-                      : 'hover:bg-gray-100 text-gray-600 hover:text-gray-900'
-                  }`}
-                >
-                  <Github size={24} />
-                </motion.a>
-
-                <motion.a
-                  whileHover={{ scale: 1.1 }}
-                  href='https://linkedin.com/in/arnoldagura'
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  className={`p-2 rounded-lg transition-colors ${
-                    theme === 'dark'
-                      ? 'hover:bg-gray-800 text-gray-400 hover:text-white'
-                      : 'hover:bg-gray-100 text-gray-600 hover:text-gray-900'
-                  }`}
-                >
-                  <Linkedin size={24} />
-                </motion.a>
+              <div className="flex items-center space-x-4">
+                <Button variant="ghost" size="icon" asChild>
+                  <a href="https://github.com/arnoldagura" target="_blank" rel="noopener noreferrer">
+                    <Github size={20} />
+                  </a>
+                </Button>
+                
+                <Button variant="ghost" size="icon" asChild>
+                  <a href="https://linkedin.com/in/arnoldagura" target="_blank" rel="noopener noreferrer">
+                    <Linkedin size={20} />
+                  </a>
+                </Button>
               </div>
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
+              initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className='relative'
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="relative"
             >
-              <div
-                className={`w-full max-w-md mx-auto aspect-square rounded-2xl ${
-                  theme === 'dark'
-                    ? 'bg-gradient-to-br from-blue-900 to-purple-900'
-                    : 'bg-gradient-to-br from-blue-100 to-purple-100'
-                } flex items-center justify-center`}
-              >
-                <div className='text-center'>
-                  <Monitor
-                    className={`w-16 h-16 mx-auto mb-4 ${
-                      theme === 'dark' ? 'text-blue-400' : 'text-blue-600'
-                    }`}
-                  />
-                  <p
-                    className={`text-lg font-medium ${
-                      theme === 'dark' ? 'text-white' : 'text-gray-900'
-                    }`}
-                  >
-                    Building the Future
-                  </p>
-                  <p
-                    className={`text-sm ${
-                      theme === 'dark' ? 'text-gray-300' : 'text-gray-600'
-                    }`}
-                  >
-                    One Component at a Time
-                  </p>
-                </div>
-              </div>
+              <Card className="border-2">
+                <CardContent className="p-8">
+                  <div className="flex items-center justify-center aspect-square">
+                    <div className="text-center">
+                      <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center">
+                        <Monitor className="w-12 h-12 text-white" />
+                      </div>
+                      <h3 className="text-2xl font-bold mb-2">Building the Future</h3>
+                      <p className="text-muted-foreground">One Component at a Time</p>
+                      
+                      <Separator className="my-6" />
+                      
+                      <div className="grid grid-cols-2 gap-4 text-sm">
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-blue-600">6+</div>
+                          <div className="text-muted-foreground">Years Exp</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-purple-600">50+</div>
+                          <div className="text-muted-foreground">Projects</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </motion.div>
           </div>
         </div>
       </section>
 
       {/* About Section */}
-      <section id='about' className='py-20'>
-        <div className='max-w-6xl mx-auto px-4 sm:px-6'>
+      <section id="about" className="py-20 bg-muted/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className='text-center mb-16'
+            className="text-center mb-16"
           >
-            <h2 className='text-3xl sm:text-4xl font-bold mb-6'>About Me</h2>
-            <div className='w-24 h-1 bg-blue-600 mx-auto rounded-full'></div>
+            <Badge variant="outline" className="mb-4">About Me</Badge>
+            <h2 className="text-4xl font-bold mb-4">Passionate About Excellence</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Creating exceptional digital experiences through clean code and modern design
+            </p>
           </motion.div>
 
-          <div className='grid grid-cols-1 lg:grid-cols-2 gap-12 items-center'>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
             >
-              <h3 className='text-2xl font-bold mb-6'>
-                Frontend Developer with a Passion for Excellence
-              </h3>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Professional Journey</CardTitle>
+                  <CardDescription>Frontend Developer with 6+ Years of Experience</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-muted-foreground">
+                    With over 6 years of experience in frontend development, I specialize in creating 
+                    exceptional user experiences using modern JavaScript frameworks. My expertise 
+                    spans from building scalable client-facing applications to dynamic user 
+                    onboarding systems for banking and fintech companies.
+                  </p>
+                  
+                  <p className="text-muted-foreground">
+                    I'm passionate about staying current with the latest technologies and best 
+                    practices, recently mastering Nuxt 3 and TypeScript while maintaining strong 
+                    expertise in React and Vue.js ecosystems.
+                  </p>
 
-              <div
-                className={`prose max-w-none ${
-                  theme === 'dark' ? 'text-gray-300' : 'text-gray-600'
-                }`}
-              >
-                <p className='mb-4'>
-                  With 6+ years of experience in frontend development, I
-                  specialize in creating exceptional user experiences using
-                  modern JavaScript frameworks. My expertise spans from building
-                  scalable client-facing applications to dynamic user onboarding
-                  systems for banking and fintech companies.
-                </p>
+                  <Separator />
 
-                <p className='mb-4'>
-                  I'm passionate about staying current with the latest
-                  technologies and best practices, recently mastering Nuxt 3 and
-                  TypeScript while maintaining strong expertise in React and
-                  Vue.js ecosystems.
-                </p>
+                  <div className="space-y-3">
+                    <div className="flex items-center space-x-3">
+                      <MapPin className="w-5 h-5 text-blue-600" />
+                      <span>Cebu City, Central Visayas, Philippines</span>
+                    </div>
 
-                <p className='mb-6'>
-                  Based in Cebu City, Philippines, I work remotely with teams
-                  worldwide, bringing a unique perspective to every project and
-                  fostering collaborative environments that drive innovation.
-                </p>
-              </div>
-
-              <div className='flex items-center space-x-4 mb-6'>
-                <MapPin
-                  className={`w-5 h-5 ${
-                    theme === 'dark' ? 'text-blue-400' : 'text-blue-600'
-                  }`}
-                />
-                <span>Cebu City, Central Visayas, Philippines</span>
-              </div>
-
-              <div className='flex items-center space-x-4'>
-                <Calendar
-                  className={`w-5 h-5 ${
-                    theme === 'dark' ? 'text-blue-400' : 'text-blue-600'
-                  }`}
-                />
-                <span>Available for remote opportunities</span>
-              </div>
+                    <div className="flex items-center space-x-3">
+                      <CheckCircle2 className="w-5 h-5 text-green-600" />
+                      <span>Available for remote opportunities</span>
+                    </div>
+                    
+                    <div className="flex items-center space-x-3">
+                      <Globe className="w-5 h-5 text-purple-600" />
+                      <span>Working with international teams</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </motion.div>
 
             <motion.div
@@ -511,53 +497,25 @@ const Portfolio = () => {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className='grid grid-cols-2 gap-6'
+              className="grid grid-cols-1 sm:grid-cols-2 gap-4"
             >
-              {[
-                {
-                  icon: Code,
-                  title: 'Clean Code',
-                  desc: 'Writing maintainable, scalable code',
-                },
-                {
-                  icon: Monitor,
-                  title: 'Responsive Design',
-                  desc: 'Mobile-first approach',
-                },
-                {
-                  icon: Globe,
-                  title: 'Web Standards',
-                  desc: 'Following best practices',
-                },
-                {
-                  icon: Briefcase,
-                  title: 'Team Player',
-                  desc: 'Collaborative development',
-                },
-              ].map((item, index) => (
+              {strengths.map((strength, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  className={`p-6 rounded-lg ${
-                    theme === 'dark' ? 'bg-gray-800' : 'bg-white shadow-lg'
-                  }`}
                 >
-                  <item.icon
-                    className={`w-8 h-8 mb-4 ${
-                      theme === 'dark' ? 'text-blue-400' : 'text-blue-600'
-                    }`}
-                  />
-                  <h4 className='font-semibold mb-2'>{item.title}</h4>
-                  <p
-                    className={`text-sm ${
-                      theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
-                    }`}
-                  >
-                    {item.desc}
-                  </p>
+                  <Card className="h-full hover:shadow-lg transition-shadow">
+                    <CardContent className="p-6">
+                      <strength.icon className="w-10 h-10 mb-4 text-blue-600" />
+                      <h4 className="font-semibold mb-2">{strength.title}</h4>
+                      <p className="text-sm text-muted-foreground">
+                        {strength.description}
+                      </p>
+                    </CardContent>
+                  </Card>
                 </motion.div>
               ))}
             </motion.div>
@@ -566,25 +524,23 @@ const Portfolio = () => {
       </section>
 
       {/* Experience Section */}
-      <section
-        id='experience'
-        className={`py-20 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'}`}
-      >
-        <div className='max-w-6xl mx-auto px-4 sm:px-6'>
+      <section id="experience" className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className='text-center mb-16'
+            className="text-center mb-16"
           >
-            <h2 className='text-3xl sm:text-4xl font-bold mb-6'>
-              Work Experience
-            </h2>
-            <div className='w-24 h-1 bg-blue-600 mx-auto rounded-full'></div>
+            <Badge variant="outline" className="mb-4">Career</Badge>
+            <h2 className="text-4xl font-bold mb-4">Work Experience</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Building exceptional products across fintech, banking, and legal tech
+            </p>
           </motion.div>
 
-          <div className='space-y-8'>
+          <div className="space-y-6">
             {experiences.map((exp, index) => (
               <motion.div
                 key={index}
@@ -592,73 +548,69 @@ const Portfolio = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className={`rounded-lg p-6 ${
-                  theme === 'dark' ? 'bg-gray-900' : 'bg-white shadow-lg'
-                }`}
               >
-                <div className='flex flex-col lg:flex-row lg:items-center lg:justify-between mb-4'>
-                  <div>
-                    <h3 className='text-xl font-bold mb-1'>{exp.role}</h3>
-                    <p
-                      className={`text-lg ${
-                        theme === 'dark' ? 'text-blue-400' : 'text-blue-600'
-                      }`}
-                    >
-                      {exp.company}
+                <Card className="hover:shadow-lg transition-shadow">
+                  <CardHeader>
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                      <div>
+                        <div className="flex items-center gap-2 mb-2">
+                          <CardTitle>{exp.role}</CardTitle>
+                          {exp.current && (
+                            <Badge variant="default">
+                              <Sparkles className="w-3 h-3 mr-1" />
+                              Current
+                            </Badge>
+                          )}
+                        </div>
+                        <CardDescription className="text-base font-medium text-blue-600">
+                          {exp.company}
+                        </CardDescription>
+                      </div>
+                      
+                      <div className="flex flex-col gap-1 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-2">
+                          <Calendar className="w-4 h-4" />
+                          {exp.period}
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <MapPin className="w-4 h-4" />
+                          {exp.location}
+                        </div>
+                      </div>
+                    </div>
+                  </CardHeader>
+
+                  <CardContent>
+                    <p className="text-muted-foreground mb-4">
+                      {exp.description}
                     </p>
-                  </div>
 
-                  <div
-                    className={`text-sm mt-2 lg:mt-0 ${
-                      theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
-                    }`}
-                  >
-                    <div className='flex items-center mb-1'>
-                      <Calendar className='w-4 h-4 mr-1' />
-                      {exp.period}
+                    <div className="mb-4">
+                      <h4 className="font-semibold mb-3 flex items-center gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-green-600" />
+                        Key Achievements
+                      </h4>
+                      <ul className="space-y-2">
+                        {exp.achievements.map((achievement, i) => (
+                          <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
+                            <span className="text-blue-600 mt-1">•</span>
+                            <span>{achievement}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
-                    <div className='flex items-center'>
-                      <MapPin className='w-4 h-4 mr-1' />
-                      {exp.location}
+
+                    <Separator className="my-4" />
+
+                    <div className="flex flex-wrap gap-2">
+                      {exp.tech.map((tech, i) => (
+                        <Badge key={i} variant="secondary">
+                          {tech}
+                        </Badge>
+                      ))}
                     </div>
-                  </div>
-                </div>
-
-                <p
-                  className={`mb-4 ${
-                    theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
-                  }`}
-                >
-                  {exp.description}
-                </p>
-
-                <div className='mb-4'>
-                  <h4 className='font-semibold mb-2'>Key Achievements:</h4>
-                  <ul
-                    className={`list-disc list-inside space-y-1 text-sm ${
-                      theme === 'dark' ? 'text-gray-300' : 'text-gray-600'
-                    }`}
-                  >
-                    {exp.achievements.map((achievement, i) => (
-                      <li key={i}>{achievement}</li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className='flex flex-wrap gap-2'>
-                  {exp.tech.map((tech, i) => (
-                    <span
-                      key={i}
-                      className={`px-3 py-1 rounded-full text-xs font-medium ${
-                        theme === 'dark'
-                          ? 'bg-blue-900 text-blue-300'
-                          : 'bg-blue-100 text-blue-800'
-                      }`}
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
+                  </CardContent>
+                </Card>
               </motion.div>
             ))}
           </div>
@@ -666,76 +618,67 @@ const Portfolio = () => {
       </section>
 
       {/* Skills Section */}
-      <section id='skills' className='py-20'>
-        <div className='max-w-6xl mx-auto px-4 sm:px-6'>
+      <section id="skills" className="py-20 bg-muted/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className='text-center mb-16'
+            className="text-center mb-16"
           >
-            <h2 className='text-3xl sm:text-4xl font-bold mb-6'>
-              Skills & Expertise
-            </h2>
-            <div className='w-24 h-1 bg-blue-600 mx-auto rounded-full'></div>
+            <Badge variant="outline" className="mb-4">Expertise</Badge>
+            <h2 className="text-4xl font-bold mb-4">Skills & Technologies</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Comprehensive skill set across modern web development stack
+            </p>
           </motion.div>
 
-          <div className='grid grid-cols-1 lg:grid-cols-2 gap-12'>
-            {Object.entries(skills).map(
-              ([category, skillList], categoryIndex) => (
-                <motion.div
-                  key={category}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
-                  viewport={{ once: true }}
-                  className={`p-6 rounded-lg ${
-                    theme === 'dark' ? 'bg-gray-800' : 'bg-white shadow-lg'
-                  }`}
-                >
-                  <h3 className='text-xl font-bold mb-6'>{category}</h3>
-
-                  <div className='space-y-4'>
-                    {skillList.map((skill, index) => (
-                      <div key={index}>
-                        <div className='flex justify-between items-center mb-2'>
-                          <span className='font-medium'>{skill.name}</span>
-                          <span
-                            className={`text-sm ${
-                              theme === 'dark'
-                                ? 'text-gray-400'
-                                : 'text-gray-600'
-                            }`}
-                          >
-                            {skill.experience}
-                          </span>
-                        </div>
-
-                        <div
-                          className={`w-full rounded-full h-2 ${
-                            theme === 'dark' ? 'bg-gray-700' : 'bg-gray-200'
-                          }`}
-                        >
-                          <motion.div
-                            initial={{ width: 0 }}
-                            whileInView={{ width: `${skill.level}%` }}
-                            transition={{ duration: 1, delay: index * 0.1 }}
-                            viewport={{ once: true }}
-                            className={`h-2 rounded-full ${
-                              theme === 'dark'
-                                ? 'bg-gradient-to-r from-blue-400 to-purple-400'
-                                : 'bg-gradient-to-r from-blue-500 to-purple-500'
-                            }`}
-                          />
-                        </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <Tabs defaultValue="Frontend Frameworks" className="w-full">
+              <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4 mb-8">
+                {Object.keys(skillCategories).map((category) => (
+                  <TabsTrigger key={category} value={category} className="text-xs sm:text-sm">
+                    {category}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+              
+              {Object.entries(skillCategories).map(([category, skills]) => (
+                <TabsContent key={category} value={category}>
+                  <Card>
+                    <CardContent className="pt-6">
+                      <div className="space-y-6">
+                        {skills.map((skill, index) => (
+                          <div key={index}>
+                            <div className="flex justify-between items-center mb-2">
+                              <span className="font-medium">{skill.name}</span>
+                              <Badge variant="outline">{skill.experience}</Badge>
+                            </div>
+                            
+                            <div className="w-full bg-secondary rounded-full h-2.5 overflow-hidden">
+                              <motion.div
+                                initial={{ width: 0 }}
+                                whileInView={{ width: `${skill.level}%` }}
+                                transition={{ duration: 1, delay: index * 0.1 }}
+                                viewport={{ once: true }}
+                                className="h-2.5 rounded-full bg-gradient-to-r from-blue-600 to-purple-600"
+                              />
+                            </div>
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                </motion.div>
-              )
-            )}
-          </div>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+              ))}
+            </Tabs>
+          </motion.div>
 
           {/* Education */}
           <motion.div
@@ -743,195 +686,128 @@ const Portfolio = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className={`mt-12 p-6 rounded-lg ${
-              theme === 'dark' ? 'bg-gray-800' : 'bg-white shadow-lg'
-            }`}
+            className="mt-12"
           >
-            <h3 className='text-xl font-bold mb-4'>Education</h3>
-            <div className='flex items-start space-x-4'>
-              <div
-                className={`p-2 rounded-lg ${
-                  theme === 'dark' ? 'bg-blue-900' : 'bg-blue-100'
-                }`}
-              >
-                <FileText
-                  className={`w-6 h-6 ${
-                    theme === 'dark' ? 'text-blue-400' : 'text-blue-600'
-                  }`}
-                />
-              </div>
-              <div>
-                <h4 className='font-semibold'>
-                  Bachelor of Science: Information Technology
-                </h4>
-                <p
-                  className={`${
-                    theme === 'dark' ? 'text-blue-400' : 'text-blue-600'
-                  }`}
-                >
-                  University of San Jose - Recoletos
-                </p>
-                <p
-                  className={`text-sm ${
-                    theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
-                  }`}
-                >
-                  Magallanes St. Cebu City, Philippines
-                </p>
-              </div>
-            </div>
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <FileText className="w-5 h-5" />
+                  Education
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="flex items-start gap-4">
+                  <div className="p-3 rounded-lg bg-blue-600/10">
+                    <FileText className="w-6 h-6 text-blue-600" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-lg">Bachelor of Science: Information Technology</h4>
+                    <p className="text-blue-600 font-medium">University of San Jose - Recoletos</p>
+                    <p className="text-sm text-muted-foreground">Magallanes St. Cebu City, Philippines</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </motion.div>
         </div>
       </section>
 
       {/* Contact Section */}
-      <section
-        id='contact'
-        className={`py-20 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'}`}
-      >
-        <div className='max-w-6xl mx-auto px-4 sm:px-6'>
+      <section id="contact" className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className='text-center mb-16'
+            className="text-center mb-16"
           >
-            <h2 className='text-3xl sm:text-4xl font-bold mb-6'>
-              Let's Work Together
-            </h2>
-            <div className='w-24 h-1 bg-blue-600 mx-auto rounded-full mb-6'></div>
-            <p
-              className={`text-lg max-w-2xl mx-auto ${
-                theme === 'dark' ? 'text-gray-300' : 'text-gray-600'
-              }`}
-            >
-              Ready to bring your ideas to life? I&apos;m always open to
-              discussing new opportunities and exciting projects. Let's create
-              something amazing together.
+            <Badge variant="outline" className="mb-4">Contact</Badge>
+            <h2 className="text-4xl font-bold mb-4">Let's Work Together</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Ready to bring your ideas to life? I'm always open to discussing new opportunities 
+              and exciting projects.
             </p>
           </motion.div>
 
-          <div className='grid grid-cols-1 lg:grid-cols-2 gap-12'>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Info */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className='space-y-8'
+              className="space-y-6"
             >
-              <div>
-                <h3 className='text-2xl font-bold mb-6'>Get In Touch</h3>
-
-                <div className='space-y-4'>
-                  <div className='flex items-center space-x-4'>
-                    <div
-                      className={`p-3 rounded-lg ${
-                        theme === 'dark' ? 'bg-blue-900' : 'bg-blue-100'
-                      }`}
-                    >
-                      <Mail
-                        className={`w-6 h-6 ${
-                          theme === 'dark' ? 'text-blue-400' : 'text-blue-600'
-                        }`}
-                      />
+              <Card>
+                <CardHeader>
+                  <CardTitle>Get In Touch</CardTitle>
+                  <CardDescription>Feel free to reach out for opportunities or just to say hi!</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex items-center gap-4">
+                    <div className="p-3 rounded-lg bg-blue-600/10">
+                      <Mail className="w-6 h-6 text-blue-600" />
                     </div>
                     <div>
-                      <p className='font-medium'>Email</p>
-                      <a
-                        href='mailto:arnold.agura@email.com'
-                        className={`${
-                          theme === 'dark' ? 'text-blue-400' : 'text-blue-600'
-                        } hover:underline`}
+                      <p className="font-medium text-sm text-muted-foreground">Email</p>
+                      <a 
+                        href="mailto:arnold.agura@email.com"
+                        className="text-blue-600 hover:underline font-medium"
                       >
                         arnold.agura@email.com
                       </a>
                     </div>
                   </div>
 
-                  <div className='flex items-center space-x-4'>
-                    <div
-                      className={`p-3 rounded-lg ${
-                        theme === 'dark' ? 'bg-blue-900' : 'bg-blue-100'
-                      }`}
-                    >
-                      <MapPin
-                        className={`w-6 h-6 ${
-                          theme === 'dark' ? 'text-blue-400' : 'text-blue-600'
-                        }`}
-                      />
+                  <Separator />
+
+                  <div className="flex items-center gap-4">
+                    <div className="p-3 rounded-lg bg-purple-600/10">
+                      <MapPin className="w-6 h-6 text-purple-600" />
                     </div>
                     <div>
-                      <p className='font-medium'>Location</p>
-                      <p
-                        className={`${
-                          theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
-                        }`}
-                      >
-                        Cebu City, Central Visayas, Philippines
-                      </p>
+                      <p className="font-medium text-sm text-muted-foreground">Location</p>
+                      <p className="font-medium">Cebu City, Central Visayas, Philippines</p>
                     </div>
                   </div>
 
-                  <div className='flex items-center space-x-4'>
-                    <div
-                      className={`p-3 rounded-lg ${
-                        theme === 'dark' ? 'bg-blue-900' : 'bg-blue-100'
-                      }`}
-                    >
-                      <Globe
-                        className={`w-6 h-6 ${
-                          theme === 'dark' ? 'text-blue-400' : 'text-blue-600'
-                        }`}
-                      />
+                  <Separator />
+
+                  <div className="flex items-center gap-4">
+                    <div className="p-3 rounded-lg bg-green-600/10">
+                      <Globe className="w-6 h-6 text-green-600" />
                     </div>
                     <div>
-                      <p className='font-medium'>Availability</p>
-                      <p
-                        className={`${
-                          theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
-                        }`}
-                      >
-                        Open for remote opportunities
-                      </p>
+                      <p className="font-medium text-sm text-muted-foreground">Availability</p>
+                      <p className="font-medium">Open for remote opportunities</p>
                     </div>
                   </div>
-                </div>
-              </div>
+                </CardContent>
+              </Card>
 
-              <div>
-                <h4 className='font-semibold mb-4'>Connect with me</h4>
-                <div className='flex space-x-4'>
-                  <motion.a
-                    whileHover={{ scale: 1.1 }}
-                    href='https://github.com/arnoldagura'
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    className={`p-3 rounded-lg transition-colors ${
-                      theme === 'dark'
-                        ? 'bg-gray-700 hover:bg-gray-600 text-white'
-                        : 'bg-white hover:bg-gray-50 text-gray-900 shadow-md'
-                    }`}
-                  >
-                    <Github size={20} />
-                  </motion.a>
-
-                  <motion.a
-                    whileHover={{ scale: 1.1 }}
-                    href='https://linkedin.com/in/arnoldagura'
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    className={`p-3 rounded-lg transition-colors ${
-                      theme === 'dark'
-                        ? 'bg-gray-700 hover:bg-gray-600 text-white'
-                        : 'bg-white hover:bg-gray-50 text-gray-900 shadow-md'
-                    }`}
-                  >
-                    <Linkedin size={20} />
-                  </motion.a>
-                </div>
-              </div>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Connect With Me</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex gap-3">
+                    <Button variant="outline" size="lg" asChild>
+                      <a href="https://github.com/arnoldagura" target="_blank" rel="noopener noreferrer">
+                        <Github className="w-5 h-5 mr-2" />
+                        GitHub
+                      </a>
+                    </Button>
+                    
+                    <Button variant="outline" size="lg" asChild>
+                      <a href="https://linkedin.com/in/arnoldagura" target="_blank" rel="noopener noreferrer">
+                        <Linkedin className="w-5 h-5 mr-2" />
+                        LinkedIn
+                      </a>
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
             </motion.div>
 
             {/* Contact Form */}
@@ -940,89 +816,85 @@ const Portfolio = () => {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className={`p-6 rounded-lg ${
-                theme === 'dark' ? 'bg-gray-900' : 'bg-white shadow-lg'
-              }`}
             >
-              <h3 className='text-xl font-bold mb-6'>Send a Message</h3>
-
-              <form className='space-y-4'>
-                <div>
-                  <label className='block text-sm font-medium mb-2'>Name</label>
-                  <input
-                    type='text'
-                    className={`w-full px-3 py-2 rounded-lg border transition-colors ${
-                      theme === 'dark'
-                        ? 'bg-gray-800 border-gray-700 text-white focus:border-blue-400'
-                        : 'bg-white border-gray-300 text-gray-900 focus:border-blue-500'
-                    } focus:outline-none focus:ring-2 focus:ring-blue-500/20`}
-                    placeholder='Your name'
-                  />
-                </div>
-
-                <div>
-                  <label className='block text-sm font-medium mb-2'>
-                    Email
-                  </label>
-                  <input
-                    type='email'
-                    className={`w-full px-3 py-2 rounded-lg border transition-colors ${
-                      theme === 'dark'
-                        ? 'bg-gray-800 border-gray-700 text-white focus:border-blue-400'
-                        : 'bg-white border-gray-300 text-gray-900 focus:border-blue-500'
-                    } focus:outline-none focus:ring-2 focus:ring-blue-500/20`}
-                    placeholder='your.email@example.com'
-                  />
-                </div>
-
-                <div>
-                  <label className='block text-sm font-medium mb-2'>
-                    Message
-                  </label>
-                  <textarea
-                    rows={5}
-                    className={`w-full px-3 py-2 rounded-lg border transition-colors resize-none ${
-                      theme === 'dark'
-                        ? 'bg-gray-800 border-gray-700 text-white focus:border-blue-400'
-                        : 'bg-white border-gray-300 text-gray-900 focus:border-blue-500'
-                    } focus:outline-none focus:ring-2 focus:ring-blue-500/20`}
-                    placeholder='Tell me about your project...'
-                  />
-                </div>
-
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  type='submit'
-                  className='w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors'
-                >
-                  Send Message
-                </motion.button>
-              </form>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Send a Message</CardTitle>
+                  <CardDescription>I'll get back to you as soon as possible</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <form className="space-y-4">
+                    <div className="space-y-2">
+                      <label htmlFor="name" className="text-sm font-medium">
+                        Name
+                      </label>
+                      <Input
+                        id="name"
+                        placeholder="Your name"
+                        className="w-full"
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <label htmlFor="email" className="text-sm font-medium">
+                        Email
+                      </label>
+                      <Input
+                        id="email"
+                        type="email"
+                        placeholder="your.email@example.com"
+                        className="w-full"
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <label htmlFor="subject" className="text-sm font-medium">
+                        Subject
+                      </label>
+                      <Input
+                        id="subject"
+                        placeholder="What's this about?"
+                        className="w-full"
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <label htmlFor="message" className="text-sm font-medium">
+                        Message
+                      </label>
+                      <Textarea
+                        id="message"
+                        rows={5}
+                        placeholder="Tell me about your project..."
+                        className="w-full resize-none"
+                      />
+                    </div>
+                    
+                    <Button type="submit" className="w-full" size="lg">
+                      <Send className="w-4 h-4 mr-2" />
+                      Send Message
+                    </Button>
+                  </form>
+                </CardContent>
+              </Card>
             </motion.div>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer
-        className={`py-8 border-t ${
-          theme === 'dark'
-            ? 'bg-gray-900 border-gray-800 text-gray-400'
-            : 'bg-white border-gray-200 text-gray-600'
-        }`}
-      >
-        <div className='max-w-6xl mx-auto px-4 sm:px-6'>
-          <div className='flex flex-col md:flex-row justify-between items-center'>
-            <p>&copy; 2025 Arnold Agura. All rights reserved.</p>
-            <p className='mt-2 md:mt-0'>
-              Built with Next.js, TypeScript & Tailwind CSS
+      <footer className="py-8 border-t">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-sm text-muted-foreground">
+              © 2025 Arnold Agura. All rights reserved.
+            </p>
+            <p className="text-sm text-muted-foreground">
+              Built with Next.js, TypeScript, Tailwind CSS & shadcn/ui
             </p>
           </div>
         </div>
       </footer>
     </div>
   );
-};
-
-export default Portfolio;
+}
