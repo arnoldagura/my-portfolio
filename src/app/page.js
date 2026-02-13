@@ -1,13 +1,14 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+
+import Image from 'next/image';
+
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Mail,
   MapPin,
   ArrowUpRight,
-  ChevronLeft,
-  ChevronRight,
   Menu,
   X,
   FileText,
@@ -344,11 +345,12 @@ export default function Portfolio() {
               <div className='relative w-32 h-32 mx-auto mb-6'>
                 <div className='absolute -inset-1 bg-gradient-to-br from-primary to-emerald-500 rounded-full blur-sm opacity-60' />
                 <div className='relative w-full h-full rounded-full overflow-hidden border-2 border-background'>
-                  <img
+                  <Image
                     src='/arnold.jpg'
                     alt='Arnold Agura'
                     className='w-full h-full object-cover object-top'
                     style={{ objectPosition: '50% 15%' }}
+                    width={200} height={100} 
                   />
                 </div>
               </div>
