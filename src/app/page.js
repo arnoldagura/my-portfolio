@@ -28,6 +28,9 @@ import {
   SiGit,
   SiDocker,
   SiFigma,
+  SiBootstrap,
+  SiJquery,
+  SiMysql
 } from 'react-icons/si';
 import { Button } from '@/components/ui/button';
 import { ModeToggle } from '@/components/mode-toggle';
@@ -36,34 +39,39 @@ export default function Portfolio() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Experience timeline
   const experiences = [
     {
-      year: '2023',
-      role: 'Frontend Developer',
-      company: 'Frontline Accounting (CBX)',
+      year: '2023-present',
+      role: 'Fullstack Developer',
+      company: 'Freelance',
       current: true,
     },
     {
-      year: '2023',
+      year: '2023-2025',
+      role: 'Frontend Developer',
+      company: 'Frontline Accounting (CBX)',
+      current: false,
+    },
+    {
+      year: '2023-2024',
       role: 'Frontend Developer',
       company: 'Azensys (NotaryPro)',
       current: false,
     },
     {
-      year: '2021',
+      year: '2021-2023',
       role: 'Frontend Developer',
       company: 'Brankas',
       current: false,
     },
     {
-      year: '2020',
+      year: '2020-2021',
       role: 'Web Developer',
       company: 'Emlo Technologies',
       current: false,
     },
     {
-      year: '2017',
+      year: '2017-2020',
       role: 'Software Developer',
       company: 'DGV SmartStart',
       current: false,
@@ -92,31 +100,105 @@ export default function Portfolio() {
     ],
   };
 
-  // Projects
   const projects = [
+    {
+      title: 'Bakery POS & Operations System',
+      company: 'GoldenKrust Bakery',
+      description:
+        'Full-stack bakery management platform with dual inventory tracking, production order workflows, multi-location support, and real-time point-of-sale operations.',
+      tasks: [
+        'Built real-time POS system with cart management, barcode scanning, and multi-payment support (Cash, M-Pesa, Card, Tips)',
+        'Designed dual inventory architecture: finished goods (POS) and raw materials with movement-based stock tracking',
+        'Developed production order system with recipe management, polymorphic ingredients, and costing workflows (Draft → In Progress → Costing → Completed)',
+        'Implemented smart inventory transfer engine with UOM conversion, profit margin analysis, and stock-level recommendations',
+        'Created comprehensive sales reporting with date filtering, category breakdowns, payment method analytics, and Excel exports',
+        'Built role-based access control, employee attendance tracking, table management for dine-in, and expense tracking modules',
+        'Integrated PDF receipt/invoice generation with print-ready formatting and email delivery',
+      ],
+      stack: [
+        { name: 'Laravel', icon: SiLaravel },
+        { name: 'Bootstrap', icon: SiBootstrap },
+        { name: 'jQuery', icon: SiJquery },
+        { name: 'MySQL', icon: SiMysql },
+        { name: 'Blade', icon: SiLaravel },
+        { name: 'Git', icon: SiGit },
+      ],
+      // stack: [
+      //   { name: 'Laravel', icon: SiLaravel },
+      //   { name: 'PHP', icon: SiPhp },
+      //   { name: 'Tailwind', icon: SiTailwindcss },
+      //   { name: 'Alpine.js', icon: SiAlpinedotjs },
+      //   { name: 'Bootstrap', icon: SiBootstrap },
+      //   { name: 'jQuery', icon: SiJquery },
+      //   { name: 'SQLite', icon: SiSqlite },
+      //   { name: 'Vite', icon: SiVite },
+      //   { name: 'Git', icon: SiGit },
+      // ],
+    },
     {
       title: 'Client Onboarding Platform',
       company: 'Frontline Accounting',
       description:
         'Enterprise KYC and onboarding platform serving 200+ organizations with multi-step workflows.',
-      tech: ['Nuxt', 'TypeScript', 'Pinia'],
-      metrics: '60% faster onboarding',
+      tasks: [
+        'Built multi-step KYC onboarding workflows with form validation',
+        'Integrated document upload and verification system',
+        'Implemented role-based access control for organization admins',
+        'Developed reusable component library for onboarding forms',
+      ],
+      stack: [
+        { name: 'Nuxt', icon: SiNuxtdotjs },
+        { name: 'Vue 3', icon: SiVuedotjs },
+        { name: 'TypeScript', icon: SiTypescript },
+        { name: 'Tailwind', icon: SiTailwindcss },
+        { name: 'Laravel', icon: SiLaravel },
+        { name: 'Pinia', icon: null },
+        { name: 'Git', icon: SiGit },
+        { name: 'Docker', icon: SiDocker },
+        { name: 'Figma', icon: SiFigma },
+      ],
     },
     {
       title: 'Legal Appointment Scheduler',
       company: 'NotaryPro',
       description:
-        'Scheduling system handling 500+ daily appointments with digital signing integration.',
-      tech: ['React', 'REST APIs'],
-      metrics: '10K+ active users',
+        'Trusted by thousands of Canadians for life\'s most important documents, NotaryPro delivers fast, secure, and professional notary services every day.',
+      tasks: [
+        'Developed appointment scheduling system with calendar integration',
+        'Built digital document signing workflow',
+        'Implemented real-time availability and booking management',
+        'Created client dashboard for appointment tracking',
+      ],
+      stack: [
+        { name: 'React', icon: SiReact },
+        { name: 'TypeScript', icon: SiTypescript },
+        { name: 'Tailwind', icon: SiTailwindcss },
+        { name: 'Node.js', icon: SiNodedotjs },
+        { name: 'Git', icon: SiGit },
+        { name: 'Docker', icon: SiDocker },
+        { name: 'Figma', icon: SiFigma },
+      ],
     },
     {
       title: 'Core Banking Solution',
       company: 'Brankas',
       description:
         'Mobile-first banking app integrated with 15+ financial institutions. Led Vue 2→3 migration.',
-      tech: ['Vue 3', 'Banking APIs'],
-      metrics: '100K+ users served',
+      tasks: [
+        'Led Vue 2 to Vue 3 migration with zero downtime',
+        'Integrated APIs from 15+ financial institutions',
+        'Built transaction history and account management modules',
+        'Optimized mobile-first UI for banking workflows',
+      ],
+      stack: [
+        { name: 'Vue 3', icon: SiVuedotjs },
+        { name: 'TypeScript', icon: SiTypescript },
+        { name: 'Tailwind', icon: SiTailwindcss },
+        { name: 'Node.js', icon: SiNodedotjs },
+        { name: 'Git', icon: SiGit },
+        { name: 'Docker', icon: SiDocker },
+        { name: 'Figma', icon: SiFigma },
+      ],
     },
   ];
 
@@ -500,7 +582,7 @@ export default function Portfolio() {
                 <h2 className='text-lg font-semibold'>Recent Projects</h2>
               </div>
 
-              <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+              <div className='flex flex-col gap-4'>
                 {projects.map((project, index) => (
                   <motion.div
                     key={index}
@@ -525,24 +607,30 @@ export default function Portfolio() {
                         {project.title}
                       </h3>
 
-                      <p className='text-sm text-muted-foreground mb-4 leading-relaxed'>
+                      <p className='text-sm text-muted-foreground mb-3 leading-relaxed'>
                         {project.description}
                       </p>
 
+                      <ul className='text-sm text-muted-foreground mb-4 space-y-1'>
+                        {project.tasks.map((task, i) => (
+                          <li key={i} className='flex items-start gap-2'>
+                            <span className='text-primary mt-1.5 shrink-0'>•</span>
+                            <span>{task}</span>
+                          </li>
+                        ))}
+                      </ul>
+
                       <div className='flex flex-wrap gap-1.5 mb-3'>
-                        {project.tech.map((t) => (
+                        {project.stack.map((s) => (
                           <span
-                            key={t}
-                            className='px-2 py-0.5 text-xs rounded bg-muted border border-border'
+                            key={s.name}
+                            className='flex items-center gap-1.5 px-2 py-0.5 text-xs rounded bg-muted border border-border'
                           >
-                            {t}
+                            {s.icon && <s.icon className='w-3 h-3' />}
+                            {s.name}
                           </span>
                         ))}
                       </div>
-
-                      <p className='text-xs font-medium text-primary'>
-                        {project.metrics}
-                      </p>
                     </div>
                   </motion.div>
                 ))}
@@ -551,6 +639,7 @@ export default function Portfolio() {
           </motion.div>
 
           {/* Testimonials - spans 6 cols */}
+          {/* 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -617,7 +706,6 @@ export default function Portfolio() {
                 </motion.div>
               </AnimatePresence>
 
-              {/* Dots Indicator */}
               <div className='flex justify-center gap-1.5 mt-6'>
                 {testimonials.map((_, index) => (
                   <button
@@ -632,7 +720,8 @@ export default function Portfolio() {
                 ))}
               </div>
             </div>
-          </motion.div>
+          </motion.div> 
+          */}
 
           {/* Contact Card - spans 6 cols */}
           <motion.div
